@@ -1,0 +1,334 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import ParticleField from '../components/islands/ParticleField';
+import BootHero from '../components/islands/BootHero';
+import Terminal from '../components/islands/Terminal';
+import SkillConstellation from '../components/islands/SkillConstellation';
+import {
+  identity,
+  stats,
+  education,
+  experience,
+  projects,
+  achievements,
+  research,
+} from '../data/profile';
+---
+
+<Base>
+  <Nav />
+
+  <!-- ============ HERO ============ -->
+  <section
+    id="home"
+    class="scanline relative flex min-h-screen items-center overflow-hidden"
+  >
+    <ParticleField client:load />
+    <div
+      class="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-base"
+    >
+    </div>
+    <div class="relative mx-auto w-full max-w-content px-4 pt-24 md:px-6">
+      <div class="pointer-events-auto max-w-3xl">
+        <BootHero
+          client:load
+          name={identity.name}
+          title={identity.title}
+          tagline={identity.tagline}
+        />
+      </div>
+    </div>
+    <a
+      href="#about"
+      class="absolute bottom-8 left-1/2 -translate-x-1/2 font-mono text-xs text-faint transition-colors hover:text-cyan"
+      aria-label="Scroll to about section"
+    >
+      scroll ▼
+    </a>
+  </section>
+
+  <!-- ============ ABOUT / MISSION BRIEFING ============ -->
+  <section id="about" class="mx-auto max-w-content px-4 py-24 md:px-6">
+    <p class="eyebrow reveal">01 · mission briefing</p>
+    <div class="mt-6 grid gap-10 lg:grid-cols-[1.4fr_1fr]">
+      <div class="reveal">
+        <h2 class="font-mono text-2xl font-bold text-ink md:text-3xl">
+          Security is an AI problem.<br />
+          <span class="text-cyan">AI is a security problem.</span>
+        </h2>
+        <p class="mt-5 leading-relaxed text-dim">{identity.summary}</p>
+        <p class="mt-4 leading-relaxed text-dim">
+          I work on both sides of that loop — building ML systems that detect
+          threats, and studying how AI systems themselves can be attacked. My
+          training ground spans academic research labs, government security
+          operations centers, and national hackathon floors.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-2">
+          {
+            ['Builder', 'Researcher', 'Problem Solver', 'Security-Conscious Engineer'].map(
+              (t) => (
+                <span class="border border-line px-3 py-1 font-mono text-xs text-dim">
+                  {t}
+                </span>
+              )
+            )
+          }
+        </div>
+      </div>
+      <div class="reveal hud p-5">
+        <p class="font-mono text-xs uppercase tracking-widest text-faint">
+          education record
+        </p>
+        <p class="mt-3 font-mono text-sm font-bold text-ink">
+          {education.school}
+        </p>
+        <p class="mt-1 text-sm text-dim">{education.degree}</p>
+        <p class="mt-1 font-mono text-xs text-faint">
+          {education.period} · {education.location}
+        </p>
+        <p class="mt-3 font-mono text-sm">
+          <span class="text-faint">CGPA</span>
+          <span class="ml-2 text-term">{education.gpa}</span>
+        </p>
+        <div class="mt-4 border-t border-line pt-4">
+          <p class="font-mono text-xs text-faint">coursework/</p>
+          <p class="mt-2 text-xs leading-6 text-dim">
+            {education.coursework.join(' · ')}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats bar -->
+    <div class="mt-14 grid grid-cols-2 gap-px border border-line bg-line lg:grid-cols-4">
+      {
+        stats.map((s) => (
+          <div class="reveal bg-panel p-5">
+            <p class="font-mono text-3xl font-bold text-cyan">{s.value}</p>
+            <p class="mt-1 font-mono text-xs uppercase tracking-wider text-ink">
+              {s.label}
+            </p>
+            <p class="mt-1 text-xs text-faint">{s.detail}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- ============ EXPERIENCE TIMELINE ============ -->
+  <section id="experience" class="border-t border-line bg-panel/30">
+    <div class="mx-auto max-w-content px-4 py-24 md:px-6">
+      <p class="eyebrow reveal">02 · field record</p>
+      <h2 class="reveal mt-4 font-mono text-2xl font-bold text-ink md:text-3xl">
+        Experience
+      </h2>
+      <div class="mt-10 space-y-0">
+        {
+          experience.map((e, i) => (
+            <article class="reveal group relative grid gap-2 border-l border-line pb-10 pl-8 md:grid-cols-[180px_1fr] md:gap-8">
+              <span
+                class:list={[
+                  'absolute -left-[5px] top-1.5 h-[9px] w-[9px] rounded-full transition-transform group-hover:scale-125',
+                  i === 0 ? 'bg-cyan' : 'bg-faint',
+                ]}
+              />
+              <p class="font-mono text-xs text-faint md:pt-1">{e.period}</p>
+              <div>
+                <h3 class="font-mono text-lg font-bold text-ink">
+                  {e.role}
+                  {e.classified && (
+                    <span class="ml-3 border border-warn/40 px-2 py-0.5 align-middle font-mono text-[10px] uppercase tracking-widest text-warn">
+                      NDA · details restricted
+                    </span>
+                  )}
+                </h3>
+                <p class="mt-0.5 font-mono text-sm text-cyan">{e.org}</p>
+                <ul class="mt-3 space-y-1.5 text-sm leading-relaxed text-dim">
+                  {e.points.map((p) => (
+                    <li class="flex gap-2">
+                      <span class="mt-[7px] h-1 w-1 shrink-0 bg-cyan/60" />
+                      <span>{p}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div class="mt-3 flex flex-wrap gap-2">
+                  {e.tags.map((t) => (
+                    <span class="bg-panel2 px-2 py-0.5 font-mono text-[11px] text-dim">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+
+      <!-- Research strip -->
+      <div class="reveal hud hud-violet mt-4 p-6">
+        <p class="font-mono text-xs uppercase tracking-widest text-violet">
+          {research.heading} · paper in progress
+        </p>
+        <p class="mt-3 max-w-3xl text-sm leading-relaxed text-dim">
+          {research.body}
+        </p>
+        <div class="mt-4 flex flex-wrap gap-2">
+          {
+            research.exploring.map((r) => (
+              <span class="border border-violet/30 px-3 py-1 font-mono text-xs text-violet/90">
+                exploring: {r}
+              </span>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROJECTS ============ -->
+  <section id="projects" class="mx-auto max-w-content px-4 py-24 md:px-6">
+    <p class="eyebrow reveal">03 · project files</p>
+    <h2 class="reveal mt-4 font-mono text-2xl font-bold text-ink md:text-3xl">
+      Projects
+    </h2>
+    <p class="reveal mt-3 max-w-2xl text-sm text-dim">
+      Each file opens a full breakdown: problem, architecture, stack, impact,
+      and what it taught me.
+    </p>
+    <div class="mt-10 grid gap-5 md:grid-cols-2">
+      {
+        projects.map((p, i) => (
+          <a
+            href={`/projects/${p.slug}/`}
+            class:list={[
+              'reveal hud lift group block p-6',
+              p.accent === 'violet' && 'hud-violet',
+            ]}
+          >
+            <div class="flex items-start justify-between gap-4">
+              <p class="font-mono text-[11px] uppercase tracking-widest text-faint">
+                file_{String(i + 1).padStart(2, '0')} · {p.codename}
+              </p>
+              <span
+                class:list={[
+                  'shrink-0 font-mono text-[10px] uppercase tracking-wider',
+                  p.accent === 'cyan' ? 'text-cyan' : 'text-violet',
+                ]}
+              >
+                ● {p.status}
+              </span>
+            </div>
+            <h3 class="mt-4 font-mono text-xl font-bold text-ink transition-colors group-hover:text-cyan">
+              {p.name}
+            </h3>
+            <p class="mt-2 text-sm leading-relaxed text-dim">{p.oneLiner}</p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              {p.stack.slice(0, 4).map((s) => (
+                <span class="bg-panel2 px-2 py-0.5 font-mono text-[11px] text-dim">
+                  {s}
+                </span>
+              ))}
+            </div>
+            <p class="mt-5 font-mono text-xs text-faint transition-colors group-hover:text-cyan">
+              open file →
+            </p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- ============ SKILLS ============ -->
+  <section id="skills" class="border-t border-line bg-panel/30">
+    <div class="mx-auto max-w-content px-4 py-24 md:px-6">
+      <p class="eyebrow reveal">04 · capability map</p>
+      <h2 class="reveal mt-4 font-mono text-2xl font-bold text-ink md:text-3xl">
+        Skill constellation
+      </h2>
+      <p class="reveal mt-3 max-w-2xl text-sm text-dim">
+        Three domains, one system. Node size reflects depth of use.
+      </p>
+      <div class="reveal mt-8">
+        <SkillConstellation client:visible />
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ACHIEVEMENTS ============ -->
+  <section id="achievements" class="mx-auto max-w-content px-4 py-24 md:px-6">
+    <p class="eyebrow reveal">05 · verified record</p>
+    <h2 class="reveal mt-4 font-mono text-2xl font-bold text-ink md:text-3xl">
+      Achievements
+    </h2>
+    <div class="mt-10 grid gap-px border border-line bg-line md:grid-cols-2 lg:grid-cols-3">
+      {
+        achievements.map((a) => (
+          <div class="reveal group bg-panel p-5 transition-colors hover:bg-panel2">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-xs text-faint">{a.year}</span>
+              <span
+                class:list={[
+                  'font-mono text-[10px] uppercase tracking-widest',
+                  a.kind === 'gold' && 'text-warn',
+                  a.kind === 'research' && 'text-violet',
+                  (a.kind === 'exam' || a.kind === 'competition') && 'text-cyan',
+                ]}
+              >
+                {a.kind === 'gold' ? '★ first place' : a.kind}
+              </span>
+            </div>
+            <h3 class="mt-3 font-mono text-sm font-bold leading-snug text-ink">
+              {a.title}
+            </h3>
+            <p class="mt-2 text-xs leading-relaxed text-dim">{a.body}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- ============ TERMINAL + CONTACT ============ -->
+  <section id="contact" class="border-t border-line bg-panel/30">
+    <div class="mx-auto max-w-content px-4 py-24 md:px-6">
+      <div class="grid items-start gap-10 lg:grid-cols-2">
+        <div>
+          <p class="eyebrow reveal">06 · secure channel</p>
+          <h2 class="reveal mt-4 font-mono text-2xl font-bold text-ink md:text-3xl">
+            Open a connection
+          </h2>
+          <p class="reveal mt-4 max-w-md text-sm leading-relaxed text-dim">
+            Recruiting, research collaboration, hackathon teams, or hard
+            problems in AI × security — I respond fast on LinkedIn. Or skip
+            the pleasantries and type <span class="font-mono text-term">sudo hire</span> in
+            the terminal.
+          </p>
+          <div class="reveal mt-7 flex flex-wrap gap-3">
+            <a
+              href={identity.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hud lift px-5 py-2.5 font-mono text-sm text-cyan hover:text-ink"
+            >
+              linkedin →
+            </a>
+            <a
+              href={identity.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="border border-line px-5 py-2.5 font-mono text-sm text-dim transition-colors hover:border-cyan/40 hover:text-ink"
+            >
+              github/t4shee
+            </a>
+          </div>
+        </div>
+        <div id="terminal" class="reveal">
+          <Terminal client:visible />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Base>

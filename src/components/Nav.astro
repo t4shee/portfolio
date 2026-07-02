@@ -1,0 +1,45 @@
+---
+import { identity } from '../data/profile';
+const links = [
+  ['about', '/#about'],
+  ['experience', '/#experience'],
+  ['projects', '/#projects'],
+  ['skills', '/#skills'],
+  ['achievements', '/#achievements'],
+  ['contact', '/#contact'],
+];
+---
+
+<header
+  class="fixed top-0 z-50 w-full border-b border-line bg-base/80 backdrop-blur-md"
+>
+  <nav
+    class="mx-auto flex max-w-content items-center justify-between px-4 py-3 md:px-6"
+    aria-label="Main"
+  >
+    <a href="/" class="font-mono text-sm font-bold text-ink">
+      <span class="text-cyan">~/</span>{identity.handle}
+      <span class="cursor-blink text-cyan">_</span>
+    </a>
+    <div class="hidden gap-6 md:flex">
+      {
+        links.map(([label, href]) => (
+          <a
+            href={href}
+            class="font-mono text-xs text-dim transition-colors hover:text-cyan"
+          >
+            ./{label}
+          </a>
+        ))
+      }
+    </div>
+    <a
+      href={identity.linkedin}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="hud px-3 py-1.5 font-mono text-xs text-cyan transition-colors hover:text-ink"
+    >
+      connect →
+    </a>
+  </nav>
+</header>

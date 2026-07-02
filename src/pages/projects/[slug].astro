@@ -1,0 +1,147 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import ArchDiagram from '../../components/ArchDiagram.astro';
+import { projects } from '../../data/profile';
+
+export function getStaticPaths() {
+  return projects.map((p) => ({ params: { slug: p.slug }, props: { project: p } }));
+}
+
+const { project: p } = Astro.props;
+const idx = projects.findIndex((x) => x.slug === p.slug);
+const next = projects[(idx + 1) % projects.length];
+const accentText = p.accent === 'cyan' ? 'text-cyan' : 'text-violet';
+---
+
+<Base
+  title={`${p.name} — Tashee Bisht`}
+  description={`${p.name}: ${p.oneLiner} Problem, architecture, stack, impact and learnings.`}
+  path={`/projects/${p.slug}/`}
+>
+  <Nav />
+  <main class="mx-auto max-w-content px-4 pb-24 pt-28 md:px-6">
+    <a href="/#projects" class="font-mono text-xs text-faint transition-colors hover:text-cyan">
+      ← cd ../projects
+    </a>
+
+    <header class="mt-8">
+      <p class="font-mono text-[11px] uppercase tracking-widest text-faint">
+        file_{String(idx + 1).padStart(2, '0')} · {p.codename}
+      </p>
+      <h1 class="mt-3 font-mono text-3xl font-bold text-ink md:text-5xl">
+        {p.name}
+      </h1>
+      <p class={`mt-3 font-mono text-xs uppercase tracking-wider ${accentText}`}>
+        ● {p.status}
+      </p>
+      <p class="mt-4 max-w-2xl text-lg text-dim">{p.oneLiner}</p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a
+          href={p.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hud lift px-4 py-2 font-mono text-xs text-cyan hover:text-ink"
+        >
+          {p.githubNote} →
+        </a>
+        {
+          p.demo && (
+            <a
+              href={p.demo}
+              class="border border-line px-4 py-2 font-mono text-xs text-dim transition-colors hover:border-cyan/40 hover:text-ink"
+            >
+              live demo →
+            </a>
+          )
+        }
+      </div>
+    </header>
+
+    <div class="mt-14 space-y-12">
+      <section class="reveal in">
+        <h2 class="eyebrow">problem</h2>
+        <p class="mt-4 max-w-3xl leading-relaxed text-dim">{p.problem}</p>
+      </section>
+
+      <section>
+        <h2 class="eyebrow">architecture</h2>
+        <div class="mt-4">
+          <ArchDiagram label={p.architecture.label} nodes={p.architecture.nodes} accent={p.accent} />
+        </div>
+      </section>
+
+      <section>
+        <h2 class="eyebrow">approach</h2>
+        <ul class="mt-4 max-w-3xl space-y-3">
+          {
+            p.approach.map((a, i) => (
+              <li class="flex gap-4 text-sm leading-relaxed text-dim">
+                <span class="shrink-0 font-mono text-xs text-faint">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span>{a}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="eyebrow">stack</h2>
+        <div class="mt-4 flex flex-wrap gap-2">
+          {
+            p.stack.map((s) => (
+              <span class="border border-line bg-panel px-3 py-1.5 font-mono text-xs text-dim">
+                {s}
+              </span>
+            ))
+          }
+        </div>
+      </section>
+
+      <div class="grid gap-5 md:grid-cols-2">
+        <section class="hud p-6">
+          <h2 class="eyebrow">impact</h2>
+          <ul class="mt-4 space-y-3">
+            {
+              p.impact.map((x) => (
+                <li class="flex gap-2 text-sm leading-relaxed text-dim">
+                  <span class="mt-[7px] h-1 w-1 shrink-0 bg-term" />
+                  <span>{x}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+        <section class="hud hud-violet p-6">
+          <h2 class="eyebrow" style="color:#8B5CF6">key learnings</h2>
+          <ul class="mt-4 space-y-3">
+            {
+              p.learnings.map((x) => (
+                <li class="flex gap-2 text-sm leading-relaxed text-dim">
+                  <span class="mt-[7px] h-1 w-1 shrink-0 bg-violet" />
+                  <span>{x}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+      </div>
+    </div>
+
+    <div class="mt-16 border-t border-line pt-8">
+      <a
+        href={`/projects/${next.slug}/`}
+        class="group flex items-center justify-between font-mono text-sm text-dim transition-colors hover:text-cyan"
+      >
+        <span>next file</span>
+        <span class="font-bold text-ink transition-colors group-hover:text-cyan">
+          {next.name} →
+        </span>
+      </a>
+    </div>
+  </main>
+  <Footer />
+</Base>

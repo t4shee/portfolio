@@ -1,0 +1,29 @@
+---
+import { identity } from '../data/profile';
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-line">
+  <div
+    class="mx-auto flex max-w-content flex-col items-center justify-between gap-3 px-4 py-8 font-mono text-xs text-faint md:flex-row md:px-6"
+  >
+    <p>
+      © {year} {identity.name} · built with Astro · deployed on the edge
+    </p>
+    <div class="flex gap-5">
+      <a
+        href={identity.github}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="transition-colors hover:text-cyan">github</a
+      >
+      <a
+        href={identity.linkedin}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="transition-colors hover:text-cyan">linkedin</a
+      >
+      <span class="text-term">▊ all systems operational</span>
+    </div>
+  </div>
+</footer>
