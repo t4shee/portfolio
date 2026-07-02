@@ -136,14 +136,7 @@ import {
               />
               <p class="font-mono text-xs text-faint md:pt-1">{e.period}</p>
               <div>
-                <h3 class="font-mono text-lg font-bold text-ink">
-                  {e.role}
-                  {e.classified && (
-                    <span class="ml-3 border border-warn/40 px-2 py-0.5 align-middle font-mono text-[10px] uppercase tracking-widest text-warn">
-                      NDA · details restricted
-                    </span>
-                  )}
-                </h3>
+                <h3 class="font-mono text-lg font-bold text-ink">{e.role}</h3>
                 <p class="mt-0.5 font-mono text-sm text-cyan">{e.org}</p>
                 <ul class="mt-3 space-y-1.5 text-sm leading-relaxed text-dim">
                   {e.points.map((p) => (
@@ -169,7 +162,7 @@ import {
       <!-- Research strip -->
       <div class="reveal hud hud-violet mt-4 p-6">
         <p class="font-mono text-xs uppercase tracking-widest text-violet">
-          {research.heading} · paper in progress
+          {research.heading}
         </p>
         <p class="mt-3 max-w-3xl text-sm leading-relaxed text-dim">
           {research.body}

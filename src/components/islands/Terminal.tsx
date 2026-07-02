@@ -34,7 +34,7 @@ function respond(raw: string): Line[] {
     return [
       ok(`${identity.name} — ${identity.title}`),
       out(identity.tagline),
-      out('Final-year B.Tech–M.Tech (CSE, Cyber Security), NFSU. CGPA 9.05.'),
+      out('M.Tech CSE (Cyber Security specialization), NFSU. CGPA 9.1.'),
     ];
 
   if (cmd === 'projects')
