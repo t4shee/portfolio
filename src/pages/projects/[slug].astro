@@ -12,7 +12,7 @@ export function getStaticPaths() {
 const { project: p } = Astro.props;
 const idx = projects.findIndex((x) => x.slug === p.slug);
 const next = projects[(idx + 1) % projects.length];
-const accentText = p.accent === 'cyan' ? 'text-cyan' : 'text-violet';
+const accentText = p.accent === 'mint' ? 'text-mint' : 'text-violet';
 ---
 
 <Base
@@ -22,15 +22,15 @@ const accentText = p.accent === 'cyan' ? 'text-cyan' : 'text-violet';
 >
   <Nav />
   <main class="mx-auto max-w-content px-4 pb-24 pt-28 md:px-6">
-    <a href="/#projects" class="font-mono text-xs text-faint transition-colors hover:text-cyan">
+    <a href="/#projects" class="font-mono text-xs text-dim transition-colors hover:text-mint">
       ← cd ../projects
     </a>
 
     <header class="mt-8">
-      <p class="font-mono text-[11px] uppercase tracking-widest text-faint">
+      <p class="font-mono text-[11px] uppercase tracking-widest text-dim/80">
         file_{String(idx + 1).padStart(2, '0')} · {p.codename}
       </p>
-      <h1 class="mt-3 font-mono text-3xl font-bold text-ink md:text-5xl">
+      <h1 class="display-h mt-3 text-ink">
         {p.name}
       </h1>
       <p class={`mt-3 font-mono text-xs uppercase tracking-wider ${accentText}`}>
@@ -42,7 +42,7 @@ const accentText = p.accent === 'cyan' ? 'text-cyan' : 'text-violet';
           href={p.github}
           target="_blank"
           rel="noopener noreferrer"
-          class="hud lift px-4 py-2 font-mono text-xs text-cyan hover:text-ink"
+          class="panel px-4 py-2 font-mono text-xs text-mint transition-colors hover:border-mint/60"
         >
           {p.githubNote} →
         </a>
@@ -50,7 +50,7 @@ const accentText = p.accent === 'cyan' ? 'text-cyan' : 'text-violet';
           p.demo && (
             <a
               href={p.demo}
-              class="border border-line px-4 py-2 font-mono text-xs text-dim transition-colors hover:border-cyan/40 hover:text-ink"
+              class="border border-line px-4 py-2 font-mono text-xs text-dim transition-colors hover:border-violet/60 hover:text-ink"
             >
               live demo →
             </a>
@@ -78,7 +78,7 @@ const accentText = p.accent === 'cyan' ? 'text-cyan' : 'text-violet';
           {
             p.approach.map((a, i) => (
               <li class="flex gap-4 text-sm leading-relaxed text-dim">
-                <span class="shrink-0 font-mono text-xs text-faint">
+                <span class="shrink-0 font-mono text-xs text-dim/80">
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <span>{a}</span>
@@ -93,7 +93,7 @@ const accentText = p.accent === 'cyan' ? 'text-cyan' : 'text-violet';
         <div class="mt-4 flex flex-wrap gap-2">
           {
             p.stack.map((s) => (
-              <span class="border border-line bg-panel px-3 py-1.5 font-mono text-xs text-dim">
+              <span class="border border-line bg-surface px-3 py-1.5 font-mono text-xs text-dim">
                 {s}
               </span>
             ))
@@ -102,21 +102,21 @@ const accentText = p.accent === 'cyan' ? 'text-cyan' : 'text-violet';
       </section>
 
       <div class="grid gap-5 md:grid-cols-2">
-        <section class="hud p-6">
+        <section class="panel p-6">
           <h2 class="eyebrow">impact</h2>
           <ul class="mt-4 space-y-3">
             {
               p.impact.map((x) => (
                 <li class="flex gap-2 text-sm leading-relaxed text-dim">
-                  <span class="mt-[7px] h-1 w-1 shrink-0 bg-term" />
+                  <span class="mt-[7px] h-1 w-1 shrink-0 bg-mint" />
                   <span>{x}</span>
                 </li>
               ))
             }
           </ul>
         </section>
-        <section class="hud hud-violet p-6">
-          <h2 class="eyebrow" style="color:#8B5CF6">key learnings</h2>
+        <section class="panel border-violet/25 p-6">
+          <h2 class="eyebrow" style="color:#8B5CFF">key learnings</h2>
           <ul class="mt-4 space-y-3">
             {
               p.learnings.map((x) => (
@@ -134,10 +134,10 @@ const accentText = p.accent === 'cyan' ? 'text-cyan' : 'text-violet';
     <div class="mt-16 border-t border-line pt-8">
       <a
         href={`/projects/${next.slug}/`}
-        class="group flex items-center justify-between font-mono text-sm text-dim transition-colors hover:text-cyan"
+        class="group flex items-center justify-between font-mono text-sm text-dim transition-colors hover:text-mint"
       >
         <span>next file</span>
-        <span class="font-bold text-ink transition-colors group-hover:text-cyan">
+        <span class="font-bold text-ink transition-colors group-hover:text-mint">
           {next.name} →
         </span>
       </a>

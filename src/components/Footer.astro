@@ -4,26 +4,15 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="border-t border-line">
-  <div
-    class="mx-auto flex max-w-content flex-col items-center justify-between gap-3 px-4 py-8 font-mono text-xs text-faint md:flex-row md:px-6"
-  >
-    <p>
-      © {year} {identity.name} · built with Astro · deployed on the edge
-    </p>
-    <div class="flex gap-5">
-      <a
-        href={identity.github}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="transition-colors hover:text-cyan">github</a
-      >
-      <a
-        href={identity.linkedin}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="transition-colors hover:text-cyan">linkedin</a
-      >
-      <span class="text-term">▊ all systems operational</span>
+  <div class="mx-auto flex max-w-content flex-col items-center justify-between gap-3 px-4 py-8 font-mono text-xs text-dim md:flex-row md:px-6">
+    <p>© {year} · built with Astro · deployed on the edge</p>
+    <div class="flex items-center gap-5">
+      <a href={identity.github} target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-mint">github</a>
+      <a href={identity.linkedin} target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-mint">linkedin</a>
+      <span class="flex items-center gap-1.5 text-mint">
+        <span class="pulse-dot inline-block h-1.5 w-1.5 rounded-full bg-mint"></span>
+        all systems operational
+      </span>
     </div>
   </div>
 </footer>

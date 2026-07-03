@@ -3,6 +3,8 @@
 // No component code needs to change.
 // ============================================================
 
+export const resumeAvailable = false; // flip to true after adding a sanitized public/resume.pdf
+
 export const identity = {
   name: 'Tashee Bisht',
   handle: 't4shee',
@@ -105,7 +107,7 @@ export interface Project {
   github: string;
   githubNote: string;
   demo: string | null;
-  accent: 'cyan' | 'violet';
+  accent: 'mint' | 'violet';
 }
 
 export const projects: Project[] = [
@@ -138,7 +140,7 @@ export const projects: Project[] = [
     github: 'https://github.com/t4shee',
     githubNote: 'Source private \u2014 available on request',
     demo: null,
-    accent: 'cyan',
+    accent: 'mint',
   },
   {
     slug: 'nullify',
@@ -169,7 +171,7 @@ export const projects: Project[] = [
     github: 'https://github.com/t4shee',
     githubNote: 'Source private \u2014 available on request',
     demo: null,
-    accent: 'cyan',
+    accent: 'mint',
   },
   {
     slug: 't4skforce-enterprise',
@@ -293,7 +295,7 @@ export const projects: Project[] = [
     github: 'https://github.com/t4shee',
     githubNote: 'Repository on GitHub',
     demo: '/',
-    accent: 'cyan',
+    accent: 'mint',
   },
 ];
 
@@ -306,9 +308,9 @@ export interface SkillNode {
 }
 
 export const skillClusters = {
-  ai: { label: 'AI / ML', color: '#8B5CF6' },
-  sec: { label: 'Cybersecurity', color: '#22D3EE' },
-  sys: { label: 'Systems & Software', color: '#94A3B8' },
+  ai: { label: 'AI / ML', color: '#8B5CFF' },
+  sec: { label: 'Cybersecurity', color: '#2DE0A5' },
+  sys: { label: 'Systems & Software', color: '#8B94A8' },
 } as const;
 
 export const skills: SkillNode[] = [

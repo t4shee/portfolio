@@ -3,160 +3,168 @@
 @tailwind utilities;
 
 :root {
-  --c-cyan: #22d3ee;
-  --c-violet: #8b5cf6;
-  --c-line: rgba(148, 163, 184, 0.14);
+  --violet: #8b5cff;
+  --mint: #2de0a5;
+  --threat: #ff4d6d;
+  --line: #1c2740;
 }
 
-html {
-  scroll-behavior: smooth;
-  background: #0a0e14;
+html { scroll-behavior: smooth; background: #070b14; }
+body { @apply bg-void text-ink font-sans antialiased; overflow-x: hidden; }
+
+::selection { background: rgba(139, 92, 255, 0.3); color: #e8ecf4; }
+
+/* Custom cursor active state (set by Cursor island on fine pointers) */
+html.reticle, html.reticle a, html.reticle button, html.reticle summary { cursor: none; }
+html.reticle input, html.reticle textarea { cursor: text; }
+
+/* Ambient sensor-noise mesh sits behind everything */
+.mesh-layer { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+main, header, footer { position: relative; z-index: 1; }
+
+/* Section eyebrow: mono, muted, mint index */
+.eyebrow { @apply font-mono text-xs tracking-[0.28em] uppercase text-dim; }
+.eyebrow b { @apply text-mint font-normal; }
+
+/* Huge display headers */
+.display-h {
+  font-family: 'Clash Display', Inter, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-size: clamp(2.4rem, 7vw, 5rem);
+  line-height: 1.02;
 }
 
-body {
-  @apply bg-base text-ink font-sans antialiased;
-  overflow-x: hidden;
+/* Panels: hairline border, ink surface */
+.panel { border: 1px solid var(--line); background: rgba(14, 21, 36, 0.75); }
+
+/* Scroll reveal — single quiet 300ms rise */
+.reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.3s ease-out, transform 0.3s ease-out; }
+.reveal.in { opacity: 1; transform: none; }
+
+/* Log-stream experience entries */
+.log-entry { border-left: 1px solid var(--line); transition: background 0.2s ease, border-color 0.2s ease; }
+.log-entry:hover, .log-entry:focus-within {
+  background: rgba(45, 224, 165, 0.04);
+  border-left-color: var(--mint);
+}
+.log-entry summary { list-style: none; }
+.log-entry summary::-webkit-details-marker { display: none; }
+.log-entry summary .chev { transition: transform 0.2s ease; }
+.log-entry details[open] summary .chev { transform: rotate(90deg); }
+
+/* Case-file redaction bars: slide away on hover/focus ("declassify") */
+.redacted { position: relative; }
+.redacted .bar {
+  position: absolute; left: 0; height: 0.95em; background: #10182a;
+  outline: 1px solid #1c2740;
+  transform-origin: left center;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.45s ease;
+}
+.case:hover .redacted .bar, .case:focus .redacted .bar {
+  transform: translateX(103%) scaleX(0.08); opacity: 0;
 }
 
-::selection {
-  background: rgba(34, 211, 238, 0.25);
-  color: #e2e8f0;
+/* Classification stamp */
+.stamp {
+  @apply font-mono text-[10px] tracking-[0.18em] uppercase px-2 py-1 border;
+  transform: rotate(2deg);
 }
 
-/* Subtle blueprint grid over the whole page */
-.grid-bg {
-  background-image:
-    linear-gradient(rgba(148, 163, 184, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(148, 163, 184, 0.045) 1px, transparent 1px);
-  background-size: 48px 48px;
+/* Terminal cursor + status blink */
+.cursor-blink { animation: blink 1.05s step-end infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.pulse-dot { animation: pdot 2.4s ease-in-out infinite; }
+@keyframes pdot { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+/* Hero: superposition ghosts */
+.ghost { position: absolute; inset: 0; will-change: transform; pointer-events: none; }
+@keyframes drift-a { 0%,100% { transform: translate(-5px, 2px) } 33% { transform: translate(4px, -3px) } 66% { transform: translate(-2px, 4px) } }
+@keyframes drift-b { 0%,100% { transform: translate(5px, -2px) } 40% { transform: translate(-4px, 3px) } 75% { transform: translate(3px, 2px) } }
+@keyframes drift-c { 0%,100% { transform: translate(2px, 4px) } 50% { transform: translate(-3px, -4px) } }
+.osc-a { animation: drift-a 3.1s ease-in-out infinite; }
+.osc-b { animation: drift-b 2.6s ease-in-out infinite; }
+.osc-c { animation: drift-c 3.7s ease-in-out infinite; }
+.collapsed .ghost { animation: none; transform: none !important; transition: transform 0.5s cubic-bezier(0.22, 1.4, 0.36, 1), opacity 0.4s ease; }
+
+/* Post-collapse ambient breathing glow */
+.breath { animation: breath 5s ease-in-out infinite; }
+@keyframes breath {
+  0%, 100% { text-shadow: 0 0 24px rgba(139, 92, 255, 0.12); }
+  50% { text-shadow: 0 0 42px rgba(139, 92, 255, 0.26); }
 }
 
-/* HUD panel: hairline border + corner brackets */
-.hud {
-  position: relative;
-  border: 1px solid var(--c-line);
-  background: rgba(17, 23, 34, 0.72);
+/* Collapse ripple */
+.ripple {
+  position: fixed; border-radius: 9999px; pointer-events: none; z-index: 60;
+  border: 1.5px solid var(--violet);
+  animation: ripple 0.7s ease-out forwards;
 }
-.hud::before,
-.hud::after {
-  content: '';
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  pointer-events: none;
-  transition: border-color 0.25s ease;
-}
-.hud::before {
-  top: -1px;
-  left: -1px;
-  border-top: 1px solid rgba(34, 211, 238, 0.55);
-  border-left: 1px solid rgba(34, 211, 238, 0.55);
-}
-.hud::after {
-  bottom: -1px;
-  right: -1px;
-  border-bottom: 1px solid rgba(34, 211, 238, 0.55);
-  border-right: 1px solid rgba(34, 211, 238, 0.55);
-}
-.hud-violet::before {
-  border-color: rgba(139, 92, 246, 0.55);
-}
-.hud-violet::after {
-  border-color: rgba(139, 92, 246, 0.55);
+@keyframes ripple {
+  from { opacity: 0.9; width: 0; height: 0; margin: 0; }
+  to { opacity: 0; width: 140vmax; height: 140vmax; margin: -70vmax; }
 }
 
-/* Section eyebrow label */
-.eyebrow {
-  @apply font-mono text-xs tracking-[0.3em] uppercase text-cyan;
+/* Cursor reticle */
+#reticle {
+  position: fixed; z-index: 100; pointer-events: none;
+  width: 28px; height: 28px; margin: -14px 0 0 -14px;
+  transition: transform 0.15s ease-out, opacity 0.15s ease;
+}
+#reticle .ring {
+  position: absolute; inset: 0; border: 1px solid rgba(232, 236, 244, 0.85); border-radius: 9999px;
+  transition: transform 0.18s ease-out, border-color 0.18s ease;
+}
+#reticle .dot { position: absolute; left: 50%; top: 50%; width: 3px; height: 3px; margin: -1.5px; background: var(--mint); border-radius: 9999px; }
+#reticle .tick { position: absolute; background: rgba(232, 236, 244, 0.85); transition: opacity 0.18s; }
+#reticle.hover .ring { transform: scale(1.5) rotate(45deg); border-color: var(--mint); }
+#reticle .label {
+  position: absolute; left: 30px; top: 4px; white-space: nowrap;
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em;
+  color: var(--mint); opacity: 0; transition: opacity 0.18s;
+}
+#reticle.hover .label { opacity: 1; }
+.ping {
+  position: fixed; z-index: 99; pointer-events: none; border-radius: 9999px;
+  border: 1px solid var(--mint);
+  animation: ping-out 0.4s ease-out forwards;
+}
+@keyframes ping-out {
+  from { opacity: 0.8; width: 6px; height: 6px; margin: -3px; }
+  to { opacity: 0; width: 44px; height: 44px; margin: -22px; }
+}
+.speck {
+  position: fixed; z-index: 99; pointer-events: none; width: 3px; height: 3px;
+  border-radius: 9999px; background: var(--mint);
+  animation: speck 0.42s ease-out forwards;
+}
+@keyframes speck {
+  from { opacity: 1; transform: translate(0, 0); }
+  to { opacity: 0; transform: translate(var(--dx), var(--dy)); }
 }
 
-/* Scroll-reveal: elements assemble upward as they enter the viewport */
-.reveal {
-  opacity: 0;
-  transform: translateY(18px);
-  transition:
-    opacity 0.55s ease-out,
-    transform 0.55s ease-out;
+/* Pipeline rail */
+.rail-stage { transition: color 0.3s ease; }
+.rail-stage .node {
+  width: 9px; height: 9px; border-radius: 9999px;
+  border: 1.5px solid #3a4763; background: transparent;
+  transition: all 0.3s ease;
 }
-.reveal.in {
-  opacity: 1;
-  transform: none;
+.rail-stage.pass .node { border-color: var(--mint); background: var(--mint); box-shadow: 0 0 10px rgba(45, 224, 165, 0.55); }
+.rail-stage.pass { color: var(--mint); }
+
+/* Focus rings — mint */
+a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--mint); outline-offset: 2px; border-radius: 2px;
 }
 
-/* Interactive card lift */
-.lift {
-  transition:
-    transform 0.25s ease-out,
-    border-color 0.25s ease-out,
-    box-shadow 0.25s ease-out;
-}
-.lift:hover {
-  transform: translateY(-3px);
-  border-color: rgba(34, 211, 238, 0.4);
-  box-shadow: 0 8px 32px -12px rgba(34, 211, 238, 0.18);
-}
-
-/* Blinking cursor for terminal contexts */
-.cursor-blink {
-  animation: blink 1.05s step-end infinite;
-}
-@keyframes blink {
-  50% {
-    opacity: 0;
-  }
-}
-
-/* Status dot pulse */
-.pulse-dot {
-  animation: pulse-dot 2.2s ease-in-out infinite;
-}
-@keyframes pulse-dot {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.35;
-  }
-}
-
-/* Hero scanline — hero only, extremely subtle */
-.scanline::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent 0px,
-    transparent 3px,
-    rgba(10, 14, 20, 0.14) 4px
-  );
-}
-
-/* Visible keyboard focus */
-a:focus-visible,
-button:focus-visible,
-input:focus-visible {
-  outline: 2px solid var(--c-cyan);
-  outline-offset: 2px;
-  border-radius: 2px;
-}
-
-/* Reduced motion: kill everything animated */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  *,
-  *::before,
-  *::after {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .reveal {
-    opacity: 1;
-    transform: none;
-  }
+  .reveal { opacity: 1; transform: none; }
+  .ghost { animation: none; transform: none !important; }
 }

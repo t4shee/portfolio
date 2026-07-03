@@ -128,7 +128,7 @@ export default function SkillConstellation() {
         ctx.beginPath();
         ctx.arc(c.x, c.y, 11, 0, Math.PI * 2);
         ctx.stroke();
-        ctx.font = '700 12px "JetBrains Mono", monospace';
+        ctx.font = '700 12px "IBM Plex Mono", monospace';
         ctx.fillStyle = hexA(col, on ? 0.95 : 0.3);
         ctx.textAlign = 'center';
         ctx.fillText(skillClusters[key].label.toUpperCase(), c.x, c.y - 20);
@@ -145,12 +145,12 @@ export default function SkillConstellation() {
         ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
         ctx.fill();
 
-        ctx.font = `${isHover ? '700' : '400'} 11px "JetBrains Mono", monospace`;
+        ctx.font = `${isHover ? '700' : '400'} 11px "IBM Plex Mono", monospace`;
         ctx.fillStyle = on
           ? isHover
-            ? '#E2E8F0'
-            : 'rgba(148,163,184,0.85)'
-          : 'rgba(148,163,184,0.2)';
+            ? '#E8ECF4'
+            : 'rgba(139,148,168,0.85)'
+          : 'rgba(139,148,168,0.2)';
         ctx.textAlign = 'center';
         ctx.fillText(n.label, n.x, n.y - r - 6);
       }
@@ -211,9 +211,9 @@ export default function SkillConstellation() {
   }, []);
 
   return (
-    <div className="hud hud-violet relative">
+    <div className="panel relative">
       <div className="flex items-center justify-between border-b border-line px-4 py-2.5">
-        <span className="font-mono text-xs text-faint">
+        <span className="font-mono text-xs text-dim">
           skill_constellation.map — hover to isolate a domain
         </span>
         <span className="pulse-dot h-2 w-2 rounded-full bg-violet" />

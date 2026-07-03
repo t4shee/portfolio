@@ -1,10 +1,8 @@
 ---
-import '@fontsource/inter/400.css';
-import '@fontsource/inter/500.css';
-import '@fontsource/inter/600.css';
-import '@fontsource/jetbrains-mono/400.css';
-import '@fontsource/jetbrains-mono/500.css';
-import '@fontsource/jetbrains-mono/700.css';
+import '@fontsource/ibm-plex-sans/400.css';
+import '@fontsource/ibm-plex-sans/500.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
 import '../styles/global.css';
 import { identity } from '../data/profile';
 
@@ -16,7 +14,7 @@ interface Props {
 
 const {
   title = `${identity.name} — ${identity.title}`,
-  description = `${identity.name} · ${identity.title}. ${identity.tagline} National hackathon winner, IndiaSkills medallist, GATE CSE qualified. AI/ML, cybersecurity, SOC operations, LLM security.`,
+  description = `${identity.name} · ${identity.title}. ${identity.tagline} National hackathon winner, IndiaSkills medallist, GATE CSE qualified. AI/ML, cybersecurity, SOC operations, LLM security, post-quantum cryptography.`,
   path = '/',
 } = Astro.props;
 
@@ -30,39 +28,33 @@ const jsonLd = {
   url: site,
   jobTitle: identity.title,
   description: identity.tagline,
-  alumniOf: {
-    '@type': 'CollegeOrUniversity',
-    name: 'National Forensic Sciences University',
-  },
+  alumniOf: { '@type': 'CollegeOrUniversity', name: 'National Forensic Sciences University' },
   knowsAbout: [
-    'Artificial Intelligence',
-    'Machine Learning',
-    'Cybersecurity',
-    'LLM Security',
-    'SOC Operations',
-    'Software Engineering',
-    'DevSecOps',
+    'Artificial Intelligence', 'Machine Learning', 'Cybersecurity', 'LLM Security',
+    'SOC Operations', 'Post-Quantum Cryptography', 'Software Engineering', 'DevSecOps',
   ],
   sameAs: [identity.github, identity.linkedin],
 };
 ---
 
 <!doctype html>
-<html lang="en" class="grid-bg">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content={identity.name} />
-    <meta
-      name="keywords"
-      content="Tashee Bisht, AI security engineer, cybersecurity researcher, machine learning, LLM security, SOC, NFSU, portfolio"
-    />
+    <meta name="keywords" content="Tashee Bisht, AI security engineer, cybersecurity researcher, machine learning, LLM security, post-quantum cryptography, SOC, NFSU, portfolio" />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta name="theme-color" content="#0A0E14" />
+    <meta name="theme-color" content="#070B14" />
+
+    <!-- Clash Display via Fontshare (free) -->
+    <link rel="preconnect" href="https://api.fontshare.com" />
+    <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600&display=swap" rel="stylesheet" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -84,7 +76,7 @@ const jsonLd = {
     <slot />
 
     <script>
-      // Scroll-reveal via IntersectionObserver — transform/opacity only (GPU-composited)
+      // Scroll-reveal: single quiet 300ms rise per element
       const io = new IntersectionObserver(
         (entries) => {
           for (const e of entries) {
@@ -94,9 +86,38 @@ const jsonLd = {
             }
           }
         },
-        { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+        { threshold: 0.12, rootMargin: '0px 0px -30px 0px' }
       );
       document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+      // Monitored metrics: count-up on scroll-in
+      const counters = document.querySelectorAll<HTMLElement>('[data-count]');
+      const cio = new IntersectionObserver((entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          cio.unobserve(e.target);
+          const el = e.target as HTMLElement;
+          const target = el.dataset.count ?? '';
+          const num = parseFloat(target);
+          if (isNaN(num) || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            el.textContent = target;
+            continue;
+          }
+          const suffix = target.replace(String(num), '');
+          const dec = (String(num).split('.')[1] || '').length;
+          const t0 = performance.now();
+          const dur = 900;
+          const tick = (t: number) => {
+            const k = Math.min((t - t0) / dur, 1);
+            const v = num * (1 - Math.pow(1 - k, 3));
+            el.textContent = v.toFixed(dec) + suffix;
+            if (k < 1) requestAnimationFrame(tick);
+            else el.textContent = target;
+          };
+          requestAnimationFrame(tick);
+        }
+      }, { threshold: 0.5 });
+      counters.forEach((c) => cio.observe(c));
     </script>
   </body>
 </html>

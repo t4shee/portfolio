@@ -42,8 +42,11 @@ achievements. Edit that one file; never touch components.
 
 - Add a certification later → add a `certifications` array to profile.ts and
   render it in `index.astro` (or ask for the section to be added).
-- Add a resume → drop a **sanitized** PDF (no phone/email if you want them
-  private) at `public/resume.pdf` and link it from the hero/terminal.
+- Add a resume → drop a **sanitized** PDF (no phone/email — your current one
+  contains both) at `public/resume.pdf`, then set `resumeAvailable = true` at
+  the top of `src/data/profile.ts`. The terminal's `cat resume.pdf` starts
+  serving the download automatically; until then it politely denies access
+  and points to LinkedIn.
 - Add project screenshots → put images in `public/projects/` and add an
   `images` field per project.
 
