@@ -12,7 +12,7 @@ export function getStaticPaths() {
 const { project: p } = Astro.props;
 const idx = projects.findIndex((x) => x.slug === p.slug);
 const next = projects[(idx + 1) % projects.length];
-const accentText = p.accent === 'mint' ? 'text-mint' : 'text-violet';
+const accentText = p.accent === 'mint' ? 'text-accent' : 'text-accent2';
 ---
 
 <Base
@@ -22,7 +22,7 @@ const accentText = p.accent === 'mint' ? 'text-mint' : 'text-violet';
 >
   <Nav />
   <main class="mx-auto max-w-content px-4 pb-24 pt-28 md:px-6">
-    <a href="/#projects" class="font-mono text-xs text-dim transition-colors hover:text-mint">
+    <a href="/#projects" class="font-mono text-xs text-dim transition-colors hover:text-accent">
       ← cd ../projects
     </a>
 
@@ -42,7 +42,7 @@ const accentText = p.accent === 'mint' ? 'text-mint' : 'text-violet';
           href={p.github}
           target="_blank"
           rel="noopener noreferrer"
-          class="panel px-4 py-2 font-mono text-xs text-mint transition-colors hover:border-mint/60"
+          class="panel px-4 py-2 font-mono text-xs text-accent transition-colors hover:border-accent/60"
         >
           {p.githubNote} →
         </a>
@@ -50,7 +50,7 @@ const accentText = p.accent === 'mint' ? 'text-mint' : 'text-violet';
           p.demo && (
             <a
               href={p.demo}
-              class="border border-line px-4 py-2 font-mono text-xs text-dim transition-colors hover:border-violet/60 hover:text-ink"
+              class="border border-line px-4 py-2 font-mono text-xs text-dim transition-colors hover:border-accent2/60 hover:text-ink"
             >
               live demo →
             </a>
@@ -108,20 +108,20 @@ const accentText = p.accent === 'mint' ? 'text-mint' : 'text-violet';
             {
               p.impact.map((x) => (
                 <li class="flex gap-2 text-sm leading-relaxed text-dim">
-                  <span class="mt-[7px] h-1 w-1 shrink-0 bg-mint" />
+                  <span class="mt-[7px] h-1 w-1 shrink-0 bg-accent" />
                   <span>{x}</span>
                 </li>
               ))
             }
           </ul>
         </section>
-        <section class="panel border-violet/25 p-6">
-          <h2 class="eyebrow" style="color:#8B5CFF">key learnings</h2>
+        <section class="panel border-accent2/25 p-6">
+          <h2 class="eyebrow" style="color:#7C8B7A">key learnings</h2>
           <ul class="mt-4 space-y-3">
             {
               p.learnings.map((x) => (
                 <li class="flex gap-2 text-sm leading-relaxed text-dim">
-                  <span class="mt-[7px] h-1 w-1 shrink-0 bg-violet" />
+                  <span class="mt-[7px] h-1 w-1 shrink-0 bg-accent2" />
                   <span>{x}</span>
                 </li>
               ))
@@ -134,10 +134,10 @@ const accentText = p.accent === 'mint' ? 'text-mint' : 'text-violet';
     <div class="mt-16 border-t border-line pt-8">
       <a
         href={`/projects/${next.slug}/`}
-        class="group flex items-center justify-between font-mono text-sm text-dim transition-colors hover:text-mint"
+        class="group flex items-center justify-between font-mono text-sm text-dim transition-colors hover:text-accent"
       >
         <span>next file</span>
-        <span class="font-bold text-ink transition-colors group-hover:text-mint">
+        <span class="font-bold text-ink transition-colors group-hover:text-accent">
           {next.name} →
         </span>
       </a>

@@ -15,7 +15,7 @@ export default function PointMesh() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const N = window.innerWidth < 768 ? 34 : 60;
+    const N = window.innerWidth < 768 ? 28 : 48;
     const LINK = 120;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let w = 0, h = 0, raf = 0, running = true;
@@ -38,7 +38,7 @@ export default function PointMesh() {
         y: Math.random() * h,
         vx: (Math.random() - 0.5) * 0.18,
         vy: (Math.random() - 0.5) * 0.18,
-        violet: Math.random() < 0.3,
+        violet: Math.random() < 0.16,
       }));
     };
 
@@ -62,7 +62,7 @@ export default function PointMesh() {
           const a = pts[i], b = pts[j];
           const d = Math.hypot(a.x - b.x, a.y - b.y);
           if (d < LINK) {
-            ctx.strokeStyle = `rgba(139,148,168,${(1 - d / LINK) * 0.07})`;
+            ctx.strokeStyle = `rgba(154,152,145,${(1 - d / LINK) * 0.05})`;
             ctx.beginPath();
             ctx.moveTo(a.x + px, a.y + py);
             ctx.lineTo(b.x + px, b.y + py);
@@ -71,7 +71,7 @@ export default function PointMesh() {
         }
       }
       for (const p of pts) {
-        ctx.fillStyle = p.violet ? 'rgba(139,92,255,0.30)' : 'rgba(139,148,168,0.28)';
+        ctx.fillStyle = p.violet ? 'rgba(201,162,39,0.20)' : 'rgba(154,152,145,0.20)';
         ctx.beginPath();
         ctx.arc(p.x + px, p.y + py, 1.1, 0, Math.PI * 2);
         ctx.fill();

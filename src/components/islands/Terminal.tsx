@@ -195,32 +195,32 @@ export default function Terminal() {
   };
 
   const color = (k: Line['kind']) =>
-    k === 'in' ? 'text-ink' : k === 'ok' ? 'text-mint' : k === 'err' ? 'text-threat' : k === 'violet' ? 'text-violet' : 'text-dim';
+    k === 'in' ? 'text-ink' : k === 'ok' ? 'text-accent' : k === 'err' ? 'text-alert' : k === 'violet' ? 'text-accent2' : 'text-dim';
 
   return (
     <div className="panel text-left cursor-text" onClick={() => inputRef.current?.focus()} data-native-cursor>
       <div className="flex items-center gap-2 border-b border-line px-4 py-2.5">
-        <span className="h-2.5 w-2.5 rounded-full bg-threat/70" />
-        <span className="h-2.5 w-2.5 rounded-full bg-violet/70" />
-        <span className="h-2.5 w-2.5 rounded-full bg-mint/70" />
+        <span className="h-2.5 w-2.5 rounded-full bg-alert/70" />
+        <span className="h-2.5 w-2.5 rounded-full bg-accent2/70" />
+        <span className="h-2.5 w-2.5 rounded-full bg-accent/70" />
         <span className="ml-3 font-mono text-xs text-dim">tashee@portfolio: ~ (interactive — type here)</span>
       </div>
       <div ref={bodyRef} className="h-72 overflow-y-auto px-4 py-3 font-mono text-[13px] leading-6" role="log" aria-live="polite">
         {history.map((l, i) => (
           <p key={i} className={color(l.kind)}>
-            {l.kind === 'in' && <span className="text-mint select-none">$ </span>}
+            {l.kind === 'in' && <span className="text-accent select-none">$ </span>}
             {l.text}
           </p>
         ))}
         <div className="flex items-center">
-          <span className="text-mint select-none">$&nbsp;</span>
+          <span className="text-accent select-none">$&nbsp;</span>
           <input
             ref={inputRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={onKey}
             disabled={busy}
-            className="flex-1 bg-transparent text-ink outline-none caret-[#2DE0A5]"
+            className="flex-1 bg-transparent text-ink outline-none caret-[#C9A227]"
             aria-label="Terminal command input"
             autoComplete="off"
             autoCapitalize="off"

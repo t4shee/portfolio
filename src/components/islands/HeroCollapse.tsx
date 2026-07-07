@@ -1,141 +1,104 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-const ROLES = ['AI SECURITY ENGINEER', 'ML RESEARCHER', 'QUANTUM-CURIOUS', 'DEVSECOPS'];
-const FINAL_ROLE = 'AI Security Engineer & Researcher';
-const LOG = 'state collapsed \u00b7 observer logged \u00b7 welcome';
-
+/**
+ * Calm hero: the name settles in letter by letter (fade + small rise,
+ * staggered). No glitch, no RGB split, no ghosts. Role line and status
+ * line resolve quietly after the name. Reduced motion: everything static.
+ */
 export default function HeroCollapse({ name, tagline }: { name: string; tagline: string }) {
-  const [collapsed, setCollapsed] = useState(false);
-  const [role, setRole] = useState(0);
-  const [log, setLog] = useState('');
-  const done = useRef(false);
+  const [phase, setPhase] = useState(0); // 0 settling, 1 role, 2 status
+  const [statusText, setStatusText] = useState('');
+  const reduced =
+    typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Cycle unstable role states until observation
-  useEffect(() => {
-    if (collapsed) return;
-    const id = setInterval(() => setRole((r) => (r + 1) % ROLES.length), 900);
-    return () => clearInterval(id);
-  }, [collapsed]);
+  const words = name.split(' ');
+  const letters = name.replace(/ /g, '').length;
+  const STAGGER = 45; // ms per letter
+  const STATUS = 'status: open to research collaboration & hard problems';
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      done.current = true;
-      setCollapsed(true);
-      setLog(LOG);
+    if (reduced) {
+      setPhase(2);
+      setStatusText(STATUS);
       return;
     }
-
-    const collapse = (x: number, y: number) => {
-      if (done.current) return;
-      done.current = true;
-      // radial measurement ripple from the cursor
-      const r = document.createElement('div');
-      r.className = 'ripple';
-      r.style.left = `${x}px`;
-      r.style.top = `${y}px`;
-      document.body.appendChild(r);
-      setTimeout(() => r.remove(), 750);
-      setCollapsed(true);
-      // typed log line
+    const t1 = setTimeout(() => setPhase(1), letters * STAGGER + 350);
+    const t2 = setTimeout(() => {
+      setPhase(2);
       let i = 0;
       const t = setInterval(() => {
         i++;
-        setLog(LOG.slice(0, i));
-        if (i >= LOG.length) clearInterval(t);
-      }, 26);
-    };
-
-    const onClick = (e: MouseEvent) => collapse(e.clientX, e.clientY);
-    const onKey = () => collapse(innerWidth / 2, innerHeight / 2);
-    const onScroll = () => collapse(innerWidth / 2, innerHeight / 3);
-    window.addEventListener('click', onClick, { once: true });
-    window.addEventListener('keydown', onKey, { once: true });
-    window.addEventListener('scroll', onScroll, { once: true, passive: true });
+        setStatusText(STATUS.slice(0, i));
+        if (i >= STATUS.length) clearInterval(t);
+      }, 18);
+    }, letters * STAGGER + 750);
     return () => {
-      window.removeEventListener('click', onClick);
-      window.removeEventListener('keydown', onKey);
-      window.removeEventListener('scroll', onScroll);
+      clearTimeout(t1);
+      clearTimeout(t2);
     };
   }, []);
 
+  let idx = 0;
   return (
-    <div className={collapsed ? 'collapsed' : ''}>
-      {/* Name in superposition: three offset spectral copies over a hidden sizer */}
-      <div className="relative inline-block" aria-label={name}>
-        <h1 className="display-h invisible" aria-hidden="true">
-          {name}
-        </h1>
-        <span
-          aria-hidden="true"
-          className="ghost display-h osc-a"
-          style={{ color: '#8B5CFF', opacity: collapsed ? 0 : 0.85, mixBlendMode: 'screen' }}
-        >
-          {name}
-        </span>
-        <span
-          aria-hidden="true"
-          className="ghost display-h osc-b"
-          style={{ color: '#2DE0A5', opacity: collapsed ? 0 : 0.75, mixBlendMode: 'screen' }}
-        >
-          {name}
-        </span>
-        <span
-          aria-hidden="true"
-          className="ghost display-h osc-c"
-          style={{ color: '#FF4D6D', opacity: collapsed ? 0 : 0.5, mixBlendMode: 'screen' }}
-        >
-          {name}
-        </span>
-        <span
-          aria-hidden="true"
-          className={`ghost display-h text-ink ${collapsed ? 'breath' : ''}`}
-          style={{ opacity: collapsed ? 1 : 0.28 }}
-        >
-          {name}
-        </span>
-      </div>
-
-      {/* Role line: unstable until observed */}
-      <p className="mt-4 font-mono text-sm md:text-base tracking-[0.22em] uppercase h-6">
-        {collapsed ? (
-          <span className="text-violet">{FINAL_ROLE}</span>
-        ) : (
-          <span className="text-dim" key={role}>
-            {ROLES[role]}
-            <span className="cursor-blink text-mint">▮</span>
+    <div>
+      <h1
+        className={`display-h name-wrap text-ink ${reduced ? 'name-static' : ''}`}
+        aria-label={name}
+      >
+        {words.map((w, wi) => (
+          <span key={wi} className="word" aria-hidden="true">
+            {w.split('').map((c, ci) => {
+              const d = idx++ * STAGGER;
+              return (
+                <span key={ci} className="ch" style={{ animationDelay: `${d}ms` }}>
+                  {c}
+                </span>
+              );
+            })}
+            {wi < words.length - 1 && '\u00A0'}
           </span>
-        )}
+        ))}
+      </h1>
+
+      <p
+        className="mt-4 font-mono text-sm md:text-base tracking-[0.18em] uppercase text-accent transition-opacity duration-500"
+        style={{ opacity: phase >= 1 ? 1 : 0 }}
+      >
+        AI Security Engineer &amp; Researcher
       </p>
 
-      <p className="mt-5 max-w-xl text-dim text-base md:text-lg leading-relaxed">{tagline}</p>
+      <p
+        className="mt-5 max-w-xl text-dim text-base md:text-lg leading-relaxed transition-opacity duration-500"
+        style={{ opacity: phase >= 1 ? 1 : 0 }}
+      >
+        {tagline}
+      </p>
 
-      {/* Instruction / log line */}
-      <p className="mt-8 font-mono text-xs md:text-sm h-5" aria-live="polite">
-        {collapsed ? (
-          <span className="text-mint">{log}</span>
-        ) : (
-          <span className="text-dim">
-            <span className="text-mint">&gt;</span> observe to collapse the wavefunction{' '}
-            <span className="text-ink/60">[click anywhere]</span>
-          </span>
+      <p className="mt-7 h-5 font-mono text-xs md:text-sm text-faint" aria-live="polite">
+        {phase >= 2 && (
+          <>
+            <span className="text-accent2">$</span> {statusText}
+            <span className="cursor-blink text-accent">▏</span>
+          </>
         )}
       </p>
 
       <div
         className="mt-8 flex flex-wrap gap-3 transition-opacity duration-500"
-        style={{ opacity: collapsed ? 1 : 0.35 }}
+        style={{ opacity: phase >= 1 ? 1 : 0 }}
       >
         <a
           href="#projects"
           data-cursor="open"
-          className="panel px-5 py-2.5 font-mono text-sm text-mint hover:border-mint/60 transition-colors"
+          className="panel px-5 py-2.5 font-mono text-sm text-accent transition-colors hover:border-accent/60"
         >
-          open case files →
+          view case files →
         </a>
         <a
           href="#terminal"
           data-cursor="run"
-          className="px-5 py-2.5 font-mono text-sm text-dim border border-line hover:border-violet/60 hover:text-ink transition-colors"
+          className="border border-line px-5 py-2.5 font-mono text-sm text-dim transition-colors hover:border-accent/40 hover:text-ink"
         >
           open terminal_
         </a>

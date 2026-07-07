@@ -1,22 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#070B14"/>
-  <g fill="#8B94A8" opacity="0.35">
-    <circle cx="880" cy="140" r="2"/><circle cx="1000" cy="220" r="2"/><circle cx="940" cy="330" r="2"/>
-    <circle cx="1080" cy="410" r="2"/><circle cx="850" cy="460" r="2"/><circle cx="1120" cy="180" r="2"/>
+  <rect width="1200" height="630" fill="#0C0D10"/>
+  <g stroke="#E6E4DF" stroke-opacity="0.04"><path d="M0 105h1200M0 210h1200M0 315h1200M0 420h1200M0 525h1200"/></g>
+  <g fill="#9A9891" opacity="0.3">
+    <circle cx="920" cy="150" r="2"/><circle cx="1030" cy="240" r="2"/><circle cx="960" cy="350" r="2"/><circle cx="1090" cy="430" r="2"/>
   </g>
-  <g stroke="#8B94A8" stroke-opacity="0.15">
-    <path d="M880 140L1000 220L940 330L1080 410M940 330L850 460M1000 220L1120 180"/>
-  </g>
-  <!-- superposition name: spectral offsets -->
-  <text x="76" y="252" font-family="monospace" font-size="76" font-weight="bold" fill="#8B5CFF" opacity="0.8">Tashee Bisht</text>
-  <text x="86" y="246" font-family="monospace" font-size="76" font-weight="bold" fill="#2DE0A5" opacity="0.55">Tashee Bisht</text>
-  <text x="80" y="248" font-family="monospace" font-size="76" font-weight="bold" fill="#E8ECF4">Tashee Bisht</text>
-  <text x="80" y="310" font-family="monospace" font-size="26" letter-spacing="6" fill="#8B5CFF">AI SECURITY ENGINEER &amp; RESEARCHER</text>
-  <text x="80" y="375" font-family="monospace" font-size="19" fill="#8B94A8">Building intelligent systems that defend intelligent systems.</text>
-  <text x="80" y="140" font-family="monospace" font-size="20" fill="#2DE0A5">&gt; observe to collapse the wavefunction</text>
-  <g font-family="monospace" font-size="15" fill="#2DE0A5">
-    <text x="80" y="480">build ✓   test ✓   scan ✓   sign ✓   deploy ✓</text>
-  </g>
-  <text x="80" y="520" font-family="monospace" font-size="15" fill="#8B94A8">national hackathon winner ×2 · IndiaSkills gold · GATE CSE qualified</text>
-  <text x="80" y="572" font-family="monospace" font-size="16" fill="#2DE0A5">tasheebisht.pages.dev</text>
+  <g stroke="#9A9891" stroke-opacity="0.12"><path d="M920 150L1030 240L960 350L1090 430"/></g>
+  <circle cx="1030" cy="240" r="3.5" fill="#C9A227"/>
+  <text x="80" y="130" font-family="monospace" font-size="18" letter-spacing="4" fill="#6A6862">~/t4shee · PORTFOLIO</text>
+  <text x="76" y="256" font-family="Georgia, serif" font-size="86" font-weight="500" fill="#E6E4DF">Tashee Bisht</text>
+  <text x="80" y="318" font-family="monospace" font-size="24" letter-spacing="4" fill="#C9A227">AI SECURITY ENGINEER &amp; RESEARCHER</text>
+  <text x="80" y="380" font-family="Georgia, serif" font-size="26" font-style="italic" fill="#9A9891">Building intelligent systems that defend intelligent systems.</text>
+  <text x="80" y="490" font-family="monospace" font-size="16" fill="#7C8B7A">national hackathon winner ×2 · IndiaSkills gold · GATE CSE qualified</text>
+  <text x="80" y="560" font-family="monospace" font-size="16" fill="#C9A227">tasheebisht.pages.dev</text>
 </svg>

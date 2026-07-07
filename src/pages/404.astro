@@ -4,19 +4,19 @@ import Base from '../layouts/Base.astro';
 
 <Base title="404 — Access Denied" description="Page not found." path="/404">
   <main class="flex min-h-screen items-center justify-center px-4">
-    <div class="panel w-full max-w-lg border-threat/30 p-8 text-center">
-      <p class="font-mono text-6xl font-bold text-threat">404</p>
+    <div class="panel w-full max-w-lg border-alert/30 p-8 text-center">
+      <p class="font-mono text-6xl font-bold text-alert">404</p>
       <p class="mt-4 font-mono text-lg uppercase tracking-[0.3em] text-ink">
         Access denied
       </p>
       <div class="mt-6 space-y-1 text-left font-mono text-xs text-dim">
-        <p><span class="text-mint">$</span> request: unauthorized path</p>
-        <p><span class="text-mint">$</span> status: resource not found</p>
-        <p><span class="text-mint">$</span> action: intrusion attempt logged <span class="text-threat">■</span></p>
+        <p><span class="text-accent">$</span> request: unauthorized path</p>
+        <p><span class="text-accent">$</span> status: resource not found</p>
+        <p><span class="text-accent">$</span> action: intrusion attempt logged <span class="text-alert">■</span></p>
       </div>
       <a
         href="/"
-        class="mt-8 inline-block border border-mint/40 px-5 py-2.5 font-mono text-sm text-mint transition-colors hover:bg-mint/10"
+        class="mt-8 inline-block border border-accent/40 px-5 py-2.5 font-mono text-sm text-accent transition-colors hover:bg-accent/10"
       >
         return to safe zone →
       </a>

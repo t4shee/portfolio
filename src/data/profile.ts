@@ -308,9 +308,9 @@ export interface SkillNode {
 }
 
 export const skillClusters = {
-  ai: { label: 'AI / ML', color: '#8B5CFF' },
-  sec: { label: 'Cybersecurity', color: '#2DE0A5' },
-  sys: { label: 'Systems & Software', color: '#8B94A8' },
+  ai: { label: 'AI / ML', color: '#7C8B7A' },
+  sec: { label: 'Cybersecurity', color: '#C9A227' },
+  sys: { label: 'Systems & Software', color: '#9A9891' },
 } as const;
 
 export const skills: SkillNode[] = [

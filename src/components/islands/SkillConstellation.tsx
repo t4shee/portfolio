@@ -148,9 +148,9 @@ export default function SkillConstellation() {
         ctx.font = `${isHover ? '700' : '400'} 11px "IBM Plex Mono", monospace`;
         ctx.fillStyle = on
           ? isHover
-            ? '#E8ECF4'
-            : 'rgba(139,148,168,0.85)'
-          : 'rgba(139,148,168,0.2)';
+            ? '#E6E4DF'
+            : 'rgba(154,152,145,0.9)'
+          : 'rgba(154,152,145,0.22)';
         ctx.textAlign = 'center';
         ctx.fillText(n.label, n.x, n.y - r - 6);
       }
@@ -216,7 +216,7 @@ export default function SkillConstellation() {
         <span className="font-mono text-xs text-dim">
           skill_constellation.map — hover to isolate a domain
         </span>
-        <span className="pulse-dot h-2 w-2 rounded-full bg-violet" />
+        <span className="pulse-dot h-2 w-2 rounded-full bg-accent2" />
       </div>
       <canvas
         ref={ref}

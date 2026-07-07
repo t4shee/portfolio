@@ -13,12 +13,12 @@ const links = [
 <header class="fixed top-0 z-50 w-full border-b border-line bg-void/80 backdrop-blur-md">
   <nav class="mx-auto flex max-w-content items-center justify-between px-4 py-3 md:px-6" aria-label="Main">
     <a href="/" class="font-mono text-sm font-medium text-ink" data-cursor="home">
-      <span class="text-mint">~/</span>{identity.handle}
-      <span class="cursor-blink text-mint">_</span>
+      <span class="text-accent">~/</span>{identity.handle}
+      <span class="cursor-blink text-accent">_</span>
     </a>
     <div class="hidden gap-6 lg:flex">
       {links.map(([label, href]) => (
-        <a href={href} class="font-mono text-xs text-dim transition-colors hover:text-mint">
+        <a href={href} class="font-mono text-xs text-dim transition-colors hover:text-accent">
           ./{label}
         </a>
       ))}
@@ -28,7 +28,7 @@ const links = [
       target="_blank"
       rel="noopener noreferrer"
       data-cursor="connect"
-      class="panel px-3 py-1.5 font-mono text-xs text-mint transition-colors hover:border-mint/60"
+      class="panel px-3 py-1.5 font-mono text-xs text-accent transition-colors hover:border-accent/60"
     >
       connect →
     </a>

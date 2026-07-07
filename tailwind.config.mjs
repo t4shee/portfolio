@@ -4,21 +4,25 @@ export default {
   theme: {
     extend: {
       colors: {
-        void: '#070B14',      // base
-        surface: '#0E1524',   // raised panels
-        line: '#1C2740',      // borders
-        ink: '#E8ECF4',       // primary text
-        dim: '#8B94A8',       // muted text
-        violet: '#8B5CFF',    // quantum / AI / research
-        mint: '#2DE0A5',      // signal / ops / security / success
-        threat: '#FF4D6D',    // alerts, sparse
+        // Warmer, calmer "research instrument" palette — no neon.
+        void: '#0C0D10',      // warm near-black base
+        surface: '#131519',   // raised panels
+        raise: '#181B21',     // hover surfaces
+        line: '#262A32',      // hairline borders
+        ink: '#E6E4DF',       // warm off-white primary text
+        dim: '#9A9891',       // muted warm grey
+        faint: '#6A6862',     // tertiary
+        // Single restrained accent: a muted amber/brass (instrument dial).
+        accent: '#C9A227',    // brass — used sparingly, never glowing
+        accent2: '#7C8B7A',   // sage green secondary, very quiet
+        alert: '#B4552F',     // burnt sienna, for rare alerts only
       },
       fontFamily: {
-        display: ['"Clash Display"', 'Inter', 'sans-serif'],
+        display: ['"Fraunces"', 'Georgia', 'serif'],   // characterful serif for headers
         sans: ['"IBM Plex Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         mono: ['"IBM Plex Mono"', 'ui-monospace', 'monospace'],
       },
-      maxWidth: { content: '74rem' },
+      maxWidth: { content: '72rem' },
     },
   },
   plugins: [],

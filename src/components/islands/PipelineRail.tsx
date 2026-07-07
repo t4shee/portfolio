@@ -73,7 +73,7 @@ export default function PipelineRail() {
         </ol>
         <p className="mt-8 font-mono text-[10px] leading-4 text-dim/80 w-36">
           {allPassed ? (
-            <span className="text-mint">deploy ✓ — pipeline passed in {fmt(elapsed)}</span>
+            <span className="text-accent">deploy ✓ — pipeline passed in {fmt(elapsed)}</span>
           ) : (
             <>pipeline running · {fmt(elapsed)}</>
           )}
