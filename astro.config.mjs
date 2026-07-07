@@ -3,10 +3,14 @@ import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 
+import cloudflare from "@astrojs/cloudflare";
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://tasheebisht.pages.dev',
   integrations: [react(), tailwind(), sitemap()],
   build: { inlineStylesheets: 'auto' },
   compressHTML: true,
+  output: "hybrid",
+  adapter: cloudflare()
 });
