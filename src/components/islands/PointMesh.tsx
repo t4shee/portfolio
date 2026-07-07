@@ -25,6 +25,17 @@ export default function PointMesh() {
     interface P { x: number; y: number; vx: number; vy: number; violet: boolean }
     let pts: P[] = [];
 
+    // Theme-reactive colors (RGB triplets from CSS variables)
+    let cInk = '154 152 145';
+    let cAccent = '229 163 179';
+    const readTheme = () => {
+      const cs = getComputedStyle(document.documentElement);
+      cInk = cs.getPropertyValue('--c-dim').trim() || cInk;
+      cAccent = cs.getPropertyValue('--c-accent').trim() || cAccent;
+    };
+    readTheme();
+    window.addEventListener('themechange', readTheme);
+
     const resize = () => {
       w = window.innerWidth;
       h = window.innerHeight;
@@ -62,7 +73,7 @@ export default function PointMesh() {
           const a = pts[i], b = pts[j];
           const d = Math.hypot(a.x - b.x, a.y - b.y);
           if (d < LINK) {
-            ctx.strokeStyle = `rgba(154,152,145,${(1 - d / LINK) * 0.05})`;
+            ctx.strokeStyle = `rgba(${cInk.split(' ').join(',')}, ${(1 - d / LINK) * 0.06})`;
             ctx.beginPath();
             ctx.moveTo(a.x + px, a.y + py);
             ctx.lineTo(b.x + px, b.y + py);
@@ -71,7 +82,7 @@ export default function PointMesh() {
         }
       }
       for (const p of pts) {
-        ctx.fillStyle = p.violet ? 'rgba(201,162,39,0.20)' : 'rgba(154,152,145,0.20)';
+        ctx.fillStyle = p.violet ? `rgba(${cAccent.split(' ').join(',')},0.22)` : `rgba(${cInk.split(' ').join(',')},0.22)`;
         ctx.beginPath();
         ctx.arc(p.x + px, p.y + py, 1.1, 0, Math.PI * 2);
         ctx.fill();
@@ -104,6 +115,7 @@ export default function PointMesh() {
       cancelAnimationFrame(raf);
       window.removeEventListener('resize', resize);
       window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('themechange', readTheme);
       document.removeEventListener('visibilitychange', onVis);
     };
   }, []);

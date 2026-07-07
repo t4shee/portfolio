@@ -52,7 +52,7 @@ const jsonLd = {
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta name="theme-color" content="#0C0D10" />
+    <meta name="theme-color" content="#0B0A0A" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -72,6 +72,17 @@ const jsonLd = {
   </head>
   <body>
     <slot />
+
+    <script is:inline>
+      // Runs before paint (end of body is fine for class, but set ASAP):
+      // theme persisted in localStorage; dark is the default brand theme.
+      (function () {
+        try {
+          if (localStorage.getItem('theme') === 'light')
+            document.documentElement.classList.add('light');
+        } catch (e) {}
+      })();
+    </script>
 
     <script>
       // Scroll-reveal: single quiet 300ms rise per element
@@ -116,6 +127,19 @@ const jsonLd = {
         }
       }, { threshold: 0.5 });
       counters.forEach((c) => cio.observe(c));
+
+      // Theme toggle
+      const meta = document.querySelector('meta[name="theme-color"]');
+      const applyMeta = () =>
+        meta?.setAttribute('content',
+          document.documentElement.classList.contains('light') ? '#F6F0E6' : '#0B0A0A');
+      applyMeta();
+      document.getElementById('theme-toggle')?.addEventListener('click', () => {
+        const isLight = document.documentElement.classList.toggle('light');
+        try { localStorage.setItem('theme', isLight ? 'light' : 'dark'); } catch (e) {}
+        applyMeta();
+        window.dispatchEvent(new CustomEvent('themechange'));
+      });
     </script>
   </body>
 </html>

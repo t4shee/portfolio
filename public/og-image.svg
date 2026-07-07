@@ -1,15 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#0C0D10"/>
-  <g stroke="#E6E4DF" stroke-opacity="0.04"><path d="M0 105h1200M0 210h1200M0 315h1200M0 420h1200M0 525h1200"/></g>
-  <g fill="#9A9891" opacity="0.3">
+  <rect width="1200" height="630" fill="#0B0A0A"/>
+  <g stroke="#EFE8DC" stroke-opacity="0.04"><path d="M0 105h1200M0 210h1200M0 315h1200M0 420h1200M0 525h1200"/></g>
+  <g fill="#A89F92" opacity="0.3">
     <circle cx="920" cy="150" r="2"/><circle cx="1030" cy="240" r="2"/><circle cx="960" cy="350" r="2"/><circle cx="1090" cy="430" r="2"/>
   </g>
-  <g stroke="#9A9891" stroke-opacity="0.12"><path d="M920 150L1030 240L960 350L1090 430"/></g>
-  <circle cx="1030" cy="240" r="3.5" fill="#C9A227"/>
-  <text x="80" y="130" font-family="monospace" font-size="18" letter-spacing="4" fill="#6A6862">~/t4shee · PORTFOLIO</text>
-  <text x="76" y="256" font-family="Georgia, serif" font-size="86" font-weight="500" fill="#E6E4DF">Tashee Bisht</text>
-  <text x="80" y="318" font-family="monospace" font-size="24" letter-spacing="4" fill="#C9A227">AI SECURITY ENGINEER &amp; RESEARCHER</text>
-  <text x="80" y="380" font-family="Georgia, serif" font-size="26" font-style="italic" fill="#9A9891">Building intelligent systems that defend intelligent systems.</text>
-  <text x="80" y="490" font-family="monospace" font-size="16" fill="#7C8B7A">national hackathon winner ×2 · IndiaSkills gold · GATE CSE qualified</text>
-  <text x="80" y="560" font-family="monospace" font-size="16" fill="#C9A227">tasheebisht.pages.dev</text>
+  <g stroke="#A89F92" stroke-opacity="0.12"><path d="M920 150L1030 240L960 350L1090 430"/></g>
+  <circle cx="1030" cy="240" r="3.5" fill="#E5A3B3"/>
+  <text x="80" y="130" font-family="monospace" font-size="18" letter-spacing="4" fill="#746C61">~/t4shee · PORTFOLIO</text>
+  <text x="76" y="256" font-family="Georgia, serif" font-size="86" font-weight="500" fill="#EFE8DC">Tashee Bisht</text>
+  <text x="80" y="318" font-family="monospace" font-size="24" letter-spacing="4" fill="#E5A3B3">AI SECURITY ENGINEER &amp; RESEARCHER</text>
+  <text x="80" y="380" font-family="Georgia, serif" font-size="26" font-style="italic" fill="#A89F92">Building intelligent systems that defend intelligent systems.</text>
+  <text x="80" y="490" font-family="monospace" font-size="16" fill="#CAB799">national hackathon winner ×2 · IndiaSkills gold · GATE CSE qualified</text>
+  <text x="80" y="560" font-family="monospace" font-size="16" fill="#E5A3B3">tasheebisht.pages.dev</text>
 </svg>

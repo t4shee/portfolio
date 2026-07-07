@@ -1,6 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { skills, skillClusters, type SkillNode } from '../../data/profile';
 
+// Cluster → CSS variable mapping (theme-aware): security=pink, AI=accent2, systems=dim
+const CLUSTER_VAR: Record<'ai' | 'sec' | 'sys', string> = {
+  ai: '--c-accent2',
+  sec: '--c-accent',
+  sys: '--c-dim',
+};
+
 /**
  * Skill constellation: three gravity wells (AI, Security, Systems) with
  * skills orbiting each. Hover a node to highlight it and its cluster.
@@ -29,6 +36,21 @@ export default function SkillConstellation() {
     if (!ctx) return;
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Theme-reactive palette
+    let pal: Record<string, string> = { ai: '', sec: '', sys: '' };
+    let inkCol = '';
+    let dimCol = '';
+    const readTheme = () => {
+      const cs = getComputedStyle(document.documentElement);
+      const trip = (v: string) => cs.getPropertyValue(v).trim().split(/\s+/).join(',');
+      (Object.keys(CLUSTER_VAR) as Array<'ai' | 'sec' | 'sys'>).forEach((k) => {
+        pal[k] = trip(CLUSTER_VAR[k]);
+      });
+      inkCol = trip('--c-ink');
+      dimCol = trip('--c-dim');
+    };
+    readTheme();
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let w = 0;
     let h = 0;
@@ -106,7 +128,7 @@ export default function SkillConstellation() {
       for (const n of nodes) {
         const c = centers[n.cluster];
         const on = activeCluster === null || n.cluster === activeCluster;
-        const col = skillClusters[n.cluster].color;
+        const col = pal[n.cluster];
         ctx.strokeStyle = hexA(col, on ? (n.id === hovered?.id ? 0.7 : 0.18) : 0.05);
         ctx.lineWidth = n.id === hovered?.id ? 1.5 : 1;
         ctx.beginPath();
@@ -118,7 +140,7 @@ export default function SkillConstellation() {
       // Cluster cores + labels
       for (const key of Object.keys(centers) as Array<'ai' | 'sec' | 'sys'>) {
         const c = centers[key];
-        const col = skillClusters[key].color;
+        const col = pal[key];
         const on = activeCluster === null || activeCluster === key;
         ctx.fillStyle = hexA(col, on ? 0.9 : 0.25);
         ctx.beginPath();
@@ -136,7 +158,7 @@ export default function SkillConstellation() {
 
       // Skill nodes + labels
       for (const n of nodes) {
-        const col = skillClusters[n.cluster].color;
+        const col = pal[n.cluster];
         const isHover = n.id === hovered?.id;
         const on = activeCluster === null || n.cluster === activeCluster;
         const r = 2 + n.weight * 1.4 + (isHover ? 2 : 0);
@@ -148,9 +170,9 @@ export default function SkillConstellation() {
         ctx.font = `${isHover ? '700' : '400'} 11px "IBM Plex Mono", monospace`;
         ctx.fillStyle = on
           ? isHover
-            ? '#E6E4DF'
-            : 'rgba(154,152,145,0.9)'
-          : 'rgba(154,152,145,0.22)';
+            ? `rgb(${inkCol})`
+            : `rgba(${dimCol},0.9)`
+          : `rgba(${dimCol},0.25)`;
         ctx.textAlign = 'center';
         ctx.fillText(n.label, n.x, n.y - r - 6);
       }
@@ -198,12 +220,18 @@ export default function SkillConstellation() {
       layout();
       if (reduced) draw();
     };
+    const onTheme = () => {
+      readTheme();
+      if (reduced || !running) draw();
+    };
+    window.addEventListener('themechange', onTheme);
     window.addEventListener('resize', onResize);
     canvas.addEventListener('pointermove', onMove);
 
     return () => {
       running = false;
       cancelAnimationFrame(raf);
+      window.removeEventListener('themechange', onTheme);
       window.removeEventListener('resize', onResize);
       canvas.removeEventListener('pointermove', onMove);
       vis.disconnect();
@@ -228,9 +256,6 @@ export default function SkillConstellation() {
   );
 }
 
-function hexA(hex: string, a: number) {
-  const r = parseInt(hex.slice(1, 3), 16);
-  const g = parseInt(hex.slice(3, 5), 16);
-  const b = parseInt(hex.slice(5, 7), 16);
-  return `rgba(${r},${g},${b},${a})`;
+function hexA(triplet: string, a: number) {
+  return `rgba(${triplet},${a})`;
 }

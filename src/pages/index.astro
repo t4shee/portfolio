@@ -4,7 +4,6 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import PointMesh from '../components/islands/PointMesh';
 import HeroCollapse from '../components/islands/HeroCollapse';
-import PipelineRail from '../components/islands/PipelineRail';
 import Cursor from '../components/islands/Cursor';
 import Terminal from '../components/islands/Terminal';
 import SkillConstellation from '../components/islands/SkillConstellation';
@@ -18,13 +17,12 @@ const stampColor = (s: string) =>
 <Base>
   <PointMesh client:load />
   <Cursor client:load />
-  <PipelineRail client:load />
   <Nav />
 
   <main>
     <!-- ============ HERO: SUPERPOSITION ============ -->
     <section id="home" class="relative flex min-h-screen items-center">
-      <div class="mx-auto w-full max-w-content px-4 pt-24 md:px-6 lg:pl-24">
+      <div class="mx-auto w-full max-w-content px-4 pt-24 md:px-6">
         <p class="eyebrow mb-6"><b>00</b> · index</p>
         <HeroCollapse client:load name={identity.name} tagline={identity.tagline} />
       </div>
@@ -36,7 +34,7 @@ const stampColor = (s: string) =>
     </section>
 
     <!-- ============ ABOUT: MISSION BRIEFING ============ -->
-    <section id="about" class="mx-auto max-w-content px-4 py-24 md:px-6 lg:pl-24">
+    <section id="about" class="mx-auto max-w-content px-4 py-24 md:px-6">
       <p class="eyebrow reveal"><b>01</b> · mission briefing</p>
       <h2 class="reveal display-h mt-5 text-ink">
         Security is an AI problem.<br />
@@ -91,7 +89,7 @@ const stampColor = (s: string) =>
 
     <!-- ============ EXPERIENCE: LOG STREAM ============ -->
     <section id="experience" class="border-t border-line bg-surface/40">
-      <div class="mx-auto max-w-content px-4 py-24 md:px-6 lg:pl-24">
+      <div class="mx-auto max-w-content px-4 py-24 md:px-6">
         <p class="eyebrow reveal"><b>02</b> · log stream</p>
         <h2 class="reveal display-h mt-5 text-ink">Experience</h2>
         <p class="reveal mt-3 font-mono text-xs text-dim">tail -f /var/log/career.log · newest first · select a line to expand</p>
@@ -137,7 +135,7 @@ const stampColor = (s: string) =>
     </section>
 
     <!-- ============ PROJECTS: CASE FILES ============ -->
-    <section id="projects" class="mx-auto max-w-content px-4 py-24 md:px-6 lg:pl-24">
+    <section id="projects" class="mx-auto max-w-content px-4 py-24 md:px-6">
       <p class="eyebrow reveal"><b>03</b> · case files</p>
       <h2 class="reveal display-h mt-5 text-ink">Projects</h2>
       <p class="reveal mt-3 max-w-2xl text-sm text-dim">
@@ -173,7 +171,7 @@ const stampColor = (s: string) =>
 
     <!-- ============ SKILLS: CONSTELLATION ============ -->
     <section id="skills" class="border-t border-line bg-surface/40">
-      <div class="mx-auto max-w-content px-4 py-24 md:px-6 lg:pl-24">
+      <div class="mx-auto max-w-content px-4 py-24 md:px-6">
         <p class="eyebrow reveal"><b>04</b> · capability map</p>
         <h2 class="reveal display-h mt-5 text-ink">Skill constellation</h2>
         <p class="reveal mt-3 max-w-2xl text-sm text-dim">Three clusters, one system. Node size reflects depth of use — hover to isolate a domain.</p>
@@ -184,7 +182,7 @@ const stampColor = (s: string) =>
     </section>
 
     <!-- ============ ACHIEVEMENTS: VERIFIED RECORD ============ -->
-    <section id="achievements" class="mx-auto max-w-content px-4 py-24 md:px-6 lg:pl-24">
+    <section id="achievements" class="mx-auto max-w-content px-4 py-24 md:px-6">
       <p class="eyebrow reveal"><b>05</b> · verified record</p>
       <h2 class="reveal display-h mt-5 text-ink">Achievements</h2>
       <div class="mt-10 border border-line bg-void/50">
@@ -202,7 +200,7 @@ const stampColor = (s: string) =>
 
     <!-- ============ CONTACT + TERMINAL ============ -->
     <section id="contact" class="border-t border-line bg-surface/40">
-      <div class="mx-auto max-w-content px-4 py-24 md:px-6 lg:pl-24">
+      <div class="mx-auto max-w-content px-4 py-24 md:px-6">
         <div class="grid items-start gap-10 lg:grid-cols-2">
           <div>
             <p class="eyebrow reveal"><b>06</b> · secure channel</p>

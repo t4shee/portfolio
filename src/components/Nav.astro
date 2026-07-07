@@ -23,6 +23,14 @@ const links = [
         </a>
       ))}
     </div>
+    <div class="flex items-center gap-3">
+    <button
+      id="theme-toggle"
+      type="button"
+      aria-label="Toggle light/dark theme"
+      data-cursor="theme"
+      class="border border-line px-2.5 py-1.5 font-mono text-xs text-dim transition-colors hover:border-accent/50 hover:text-accent"
+    >◐</button>
     <a
       href={identity.linkedin}
       target="_blank"
@@ -32,5 +40,6 @@ const links = [
     >
       connect →
     </a>
+    </div>
   </nav>
 </header>
